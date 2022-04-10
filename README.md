@@ -1,5 +1,7 @@
 # Summon Provider for CyberArk Identity
 
+![Summon Provider for CyberArk Identity](./assets/summon-identity-provider.png)
+
 summon is a command-line tool that reads a file in secrets.yml format and injects secrets as environment variables into any process. Once the process exits, the secrets are gone
 This is the summon provider for fetching passwords of Secured Items from CyberArk Identity
 
