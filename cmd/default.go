@@ -29,7 +29,6 @@ func PrintIntroMessage() {
 	fmt.Printf("\t%s\t\t\t Print this message\n", highlightStyle.Render("summon-identity-provider"))
 	fmt.Printf("\t%s\t Fetch a password of Secured Item from CyberArk Identity\n", highlightStyle.Render("summon-identity-provider <Secured Item Name>"))
 	fmt.Printf("\t%s\t\t Start configuration wizard\n", highlightStyle.Render("summon-identity-provider --config"))
-	fmt.Printf("\t%s\t\t Generate usage files & instruction\n", highlightStyle.Render("summon-identity-provider --usage"))
 	fmt.Printf("\t%s\t\t Login to CyberArk Identity\n", highlightStyle.Render("summon-identity-provider --login"))
 
 	fmt.Println("")
