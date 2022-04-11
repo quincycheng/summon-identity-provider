@@ -1,5 +1,13 @@
 # Summon Provider for CyberArk Identity
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/quincycheng/summon-identity-provider) [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg) [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)  [![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg) 
+
+![GitHub go.mod Go version (branch & subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/quincycheng/summon-identity-provider?filename=go.mod) [![goreleaser](https://github.com/quincycheng/summon-identity-provider/actions/workflows/goreleaser.yml/badge.svg)](https://github.com/quincycheng/summon-identity-provider/actions/workflows/goreleaser.yml)  [![CodeQL](https://github.com/quincycheng/summon-identity-provider/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/quincycheng/summon-identity-provider/actions/workflows/codeql-analysis.yml)
+
+
+
+
+
 ![Summon Provider for CyberArk Identity](./assets/summon-identity-provider.png)
 
 summon is a command-line tool that reads a file in secrets.yml format and injects secrets as environment variables into any process. Once the process exits, the secrets are gone
