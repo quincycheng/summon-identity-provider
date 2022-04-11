@@ -24,9 +24,9 @@ summon-identity-provider --login
 ```
 
 If you have logged in already and your authentication token is still valid, this command will refresh your token.
-Otherwise you will be prompted to provide necessary information, such as password, to login.
+Otherwise, you will be prompted to provide necessary information, such as password, to login.
 
-This is recommeneded to execute this command before fetching secured items
+This is recommended to execute this command before fetching secured items
 
 ### Step 3 (optional): Fetching secured item using this provider
 
@@ -46,7 +46,7 @@ To inject secured item using summon, replace your settings & execute the followi
 <path to provider>/summon-identity-provider --login \
 summon -p <path to provider>/summon-identity-provider \
     --yaml '<Env Var Name>: !var "<Secured Item Name>"' \
-    <Your command with env variable avaliable>
+    <your command with env variable available>
 ```
 
 There are many ways to utilize summon to inject secrets or secured items. More examples can be found at [Examples](#Examples) section below
@@ -63,7 +63,7 @@ summon-identity-provider --login                 Login to CyberArk Identity
 
 
 ## Config
-Configuration will saved in user configuration folder
+Configuration will be saved in user configuration folder
 
 - On Unix systems, it is `$XDG_CONFIG_HOME` as specified by https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html if non-empty, else `$HOME/.config`
 - On MacOS (Darwin), it is `$HOME/Library/Application Support`
@@ -100,7 +100,7 @@ Configuration will saved in user configuration folder
 
 ## Examples
 
-### Shell Scripts for injection secured items as envionrmental variables (macOS / Linux)
+### Shell Scripts for injection secured items as environment variables (macOS / Linux)
 
 To use shell scripts for injection secured items using summon, you can prepare an executable script as below:
 ```
@@ -109,7 +109,7 @@ To use shell scripts for injection secured items using summon, you can prepare a
 <path to provider>/summon-identity-provider --login \
 summon -p <path to provider>/summon-identity-provider \
     --yaml '<Env Var Name>: !var "<Secured Item Name>"' \
-    <Your command with env variable avaliable>
+    <Your command with env variable available>
 ```
 
 For example, to fetch the secured item named `My Secured Item`, inject it as `ITEM` environmental variables and display it using `echo $ITEM`, execute:
@@ -122,7 +122,7 @@ summon -p ./summon-identity-provider \
     sh -c 'echo $ITEM'
 ```
 
-### Alias for injection secured items as envionrmental variables (macOS/Linux)
+### Alias for injection secured items as environment variables (macOS/Linux)
 
 To set up alias for injection secured items using summon, you can prepare an executable script as below:
 ```
@@ -150,7 +150,7 @@ To use shell scripts for injection secured items as memory-mapped file using sum
 <path to provider>/summon-identity-provider --login \
 summon -p <path to provider>/summon-identity-provider \
     --yaml '<Env Var Name>: !var:file "<Secured Item Name>"' \
-    <Your command with env variable avaliable>
+    <Your command with env variable available>
 ```
 
 For example, to fetch the secured item named `My Secured Item`, inject it as `ITEM_FILE` environmental variables and display the path using `echo $ITEM_FILE` & its content using `cat $ITEM_FILE`, execute:
