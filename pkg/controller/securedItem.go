@@ -1,6 +1,12 @@
 package controller
 
 import (
+	"crypto"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/x509"
+	"encoding/base64"
+	"encoding/pem"
 	"fmt"
 
 	"github.com/quincycheng/summon-identity-provider/internal"
@@ -8,13 +14,18 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+const secureNoteType = "SecureNote"
+const securePasswordType = "Password"
+
+// GetSecuredItem
 // return value, error
 func GetSecuredItem(securedItemName string) (string, error) {
 
 	ring := internal.GetKeyring()
 	cookie := internal.GetCookie(ring)
 	fqdn := internal.GetPodFqdn(ring)
-	theKey := ""
+	itemKey := ""
+	itemType := ""
 
 	theList, err := api.GetSecuredItemsList(fqdn, cookie)
 	if err != nil {
@@ -23,18 +34,68 @@ func GetSecuredItem(securedItemName string) (string, error) {
 
 	for _, item := range gjson.Get(theList, "Result.SecuredItems").Array() {
 		if item.Get("DisplayName").String() == securedItemName {
-			theKey = item.Get("ItemKey").String()
+			itemKey = item.Get("ItemKey").String()
+			itemType = item.Get("SecuredItemType").String()
 		}
 	}
 
-	if theKey == "" {
+	if itemKey == "" {
 		return "", fmt.Errorf("item not found: %s", securedItemName)
 	}
 
-	theItem, err := api.GetCredsForSecuredItem(fqdn, cookie, theKey)
+	if itemType == secureNoteType {
+		theItem, err := api.GetCredsForSecuredItem(fqdn, cookie, itemKey)
+		if err != nil {
+			return "", err
+		}
+		return gjson.Get(theItem, "Result.n").String(), nil
+	}
+
+	if itemType == securePasswordType {
+
+		// RSA-OAEP SHA-256 2048 bit
+		privateKey, _ := rsa.GenerateKey(rand.Reader, 2048)
+		pubk := privateKey.PublicKey
+		pubkDer, _ := x509.MarshalPKIXPublicKey(&pubk)
+		pubkBlock := pem.Block{
+			Type:    "PUBLIC KEY",
+			Headers: nil,
+			Bytes:   pubkDer,
+		}
+		pubkPem := pem.EncodeToMemory(&pubkBlock)
+
+		theItem, err := api.GetCredsForSecuredPassword(fqdn, cookie, itemKey, string(pubkPem))
+		if err != nil {
+			return "", err
+		}
+
+		encryptedBytes, err := base64.StdEncoding.DecodeString(gjson.Get(theItem, "Result.e").String())
+		if err != nil {
+			panic(err)
+		}
+		decryptedBytes, err := privateKey.Decrypt(nil, encryptedBytes, &rsa.OAEPOptions{Hash: crypto.SHA256})
+		if err != nil {
+			panic(err)
+		}
+		return gjson.Get(string(decryptedBytes), "Password").String(), nil
+	}
+
+	// Unknown type
+	return "", fmt.Errorf("unsupported secured item Type: %s", itemType)
+
+}
+
+func ExportRsaPublicKeyAsPemStr(pubkey *rsa.PublicKey) (string, error) {
+	pubkey_bytes, err := x509.MarshalPKIXPublicKey(pubkey)
 	if err != nil {
 		return "", err
 	}
+	pubkey_pem := pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PUBLIC KEY",
+			Bytes: pubkey_bytes,
+		},
+	)
 
-	return gjson.Get(theItem, "Result.n").String(), nil
+	return string(pubkey_pem), nil
 }

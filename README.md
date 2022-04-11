@@ -6,8 +6,6 @@
 
 
 
-
-
 ![Summon Provider for CyberArk Identity](./assets/summon-identity-provider.png)
 
 summon is a command-line tool that reads a file in secrets.yml format and injects secrets as environment variables into any process. Once the process exits, the secrets are gone
@@ -69,13 +67,18 @@ summon-identity-provider --login                 Login to CyberArk Identity
 ```
 
 
-
 ## Config
 Configuration will be saved in user configuration folder
 
 - On Unix systems, it is `$XDG_CONFIG_HOME` as specified by https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html if non-empty, else `$HOME/.config`
 - On MacOS (Darwin), it is `$HOME/Library/Application Support`
 - On Windows, it is `%AppData%`
+
+## Secured Item Types
+
+### Supported (Tested)
+ - Secured Notes
+ - Password
 
 ## Authentication Mechanisms
 
