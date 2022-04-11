@@ -13,6 +13,7 @@ builds:
       - linux
       - windows
       - darwin
+      - solaris
 archives:
   - replacements:
       darwin: macos
@@ -30,3 +31,16 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+nfpms:
+  - homepage: https://github.com/quincycheng/summon-identity-provider
+    maintainer: Quincy Cheng <quincy.cheng@cyberark.com>
+
+    description: Summon provider for CyberArk Identity
+    recommends:
+      - summon
+    license: MIT
+    formats:
+    - deb
+    - rpm
+    - apk
+    bindir: /usr/local/lib/summon
