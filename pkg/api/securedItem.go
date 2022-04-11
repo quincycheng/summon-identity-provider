@@ -18,24 +18,21 @@ func GetSecuredItemsList(fqdn string, cookie string) (string, error) {
 		fmt.Sprintf("https://%s%s", fqdn, IdentityListSecuredItemsUrl), nil)
 
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("error %s", err)
 	}
 
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", cookie))
-
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("X-IDAP-NATIVE-CLIENT", "true")
 	resp, err := c.Do(req)
 	if err != nil {
-		fmt.Printf("error %s", err)
-		return "", err
+		return "", fmt.Errorf("error %s", err)
 	}
 	defer resp.Body.Close()
 	responseBody, responseErr := ioutil.ReadAll(resp.Body)
 
 	if responseErr != nil {
-		fmt.Printf("response error %s", responseErr)
-		return "", err
+		return "", fmt.Errorf("response error %s", err)
 	}
 
 	return string(responseBody), nil
@@ -51,7 +48,7 @@ func GetCredsForSecuredItem(fqdn string, cookie string, itemKey string) (string,
 		fmt.Sprintf("https://%s%s?sItemKey=%s", fqdn, IdentityGetCredsForSecuredItemUrl, itemKey), nil)
 
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("error %s", err)
 	}
 
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", cookie))
@@ -60,15 +57,13 @@ func GetCredsForSecuredItem(fqdn string, cookie string, itemKey string) (string,
 	req.Header.Add("X-IDAP-NATIVE-CLIENT", "true")
 	resp, err := c.Do(req)
 	if err != nil {
-		fmt.Printf("error %s", err)
-		return "", err
+		return "", fmt.Errorf("error %s", err)
 	}
 	defer resp.Body.Close()
 	responseBody, responseErr := ioutil.ReadAll(resp.Body)
 
 	if responseErr != nil {
-		fmt.Printf("response error %s", responseErr)
-		return "", err
+		return "", fmt.Errorf("response error %s", responseErr)
 	}
 
 	return string(responseBody), nil
@@ -79,32 +74,28 @@ func GetCredsForSecuredItem(fqdn string, cookie string, itemKey string) (string,
 func GetCredsForSecuredPassword(fqdn string, cookie string, itemKey string, publicKey string) (string, error) {
 
 	c := http.Client{Timeout: time.Duration(HttpTimeout) * time.Second}
-
 	reqBody := fmt.Sprintf("{\"publicKey\":\"%s\"}", publicKey)
-
 	req, err := http.NewRequest("POST",
 		fmt.Sprintf("https://%s%s?sItemKey=%s", fqdn, IdentityGetCredsForSecuredItemUrl, itemKey),
 		strings.NewReader(string(reqBody)))
 
 	if err != nil {
-		panic(err)
+		return "", fmt.Errorf("error %s", err)
 	}
 
 	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", cookie))
-
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("X-IDAP-NATIVE-CLIENT", "true")
 	resp, err := c.Do(req)
 	if err != nil {
-		fmt.Printf("error %s", err)
-		return "", err
+		return "", fmt.Errorf("error %s", err)
 	}
 	defer resp.Body.Close()
 	responseBody, responseErr := ioutil.ReadAll(resp.Body)
 
 	if responseErr != nil {
-		fmt.Printf("response error %s", responseErr)
-		return "", err
+
+		return "", fmt.Errorf("response error %s", responseErr)
 	}
 
 	return string(responseBody), nil

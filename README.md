@@ -2,7 +2,7 @@
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/quincycheng/summon-identity-provider) [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg) [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)  [![Windows](https://svgshare.com/i/ZhY.svg)](https://svgshare.com/i/ZhY.svg) 
 
-![GitHub go.mod Go version (branch & subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/quincycheng/summon-identity-provider?filename=go.mod) [![goreleaser](https://github.com/quincycheng/summon-identity-provider/actions/workflows/goreleaser.yml/badge.svg)](https://github.com/quincycheng/summon-identity-provider/actions/workflows/goreleaser.yml)  [![CodeQL](https://github.com/quincycheng/summon-identity-provider/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/quincycheng/summon-identity-provider/actions/workflows/codeql-analysis.yml)
+![GitHub go.mod Go version (branch & subdirectory of monorepo)](https://img.shields.io/github/go-mod/go-version/quincycheng/summon-identity-provider?filename=go.mod) [![GoReleaser](https://github.com/quincycheng/summon-identity-provider/actions/workflows/goreleaser.yml/badge.svg)](https://github.com/quincycheng/summon-identity-provider/actions/workflows/goreleaser.yml)  [![CodeQL](https://github.com/quincycheng/summon-identity-provider/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/quincycheng/summon-identity-provider/actions/workflows/codeql-analysis.yml)
 
 
 
@@ -88,8 +88,7 @@ Configuration will be saved in user configuration folder
  - Text message (SMS) authentication link
  - Email confirmation code	
  - Email authentication link	
-- Mobile Authenticator	
-
+ - Mobile Authenticator	
 
 ### Supported (Should work but not yet tested)
  - Security Question
@@ -173,7 +172,6 @@ summon -p ./summon-identity-provider \
     --yaml 'ITEM_FILE: !var:file "My Secured Item"' \
     sh -c 'echo file path: $ITEM FILE && cat $ITEM_FILE'
 ```
-
 
 ## Maintainer
  - Quincy Cheng

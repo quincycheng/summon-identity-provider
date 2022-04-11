@@ -84,18 +84,3 @@ func GetSecuredItem(securedItemName string) (string, error) {
 	return "", fmt.Errorf("unsupported secured item Type: %s", itemType)
 
 }
-
-func ExportRsaPublicKeyAsPemStr(pubkey *rsa.PublicKey) (string, error) {
-	pubkey_bytes, err := x509.MarshalPKIXPublicKey(pubkey)
-	if err != nil {
-		return "", err
-	}
-	pubkey_pem := pem.EncodeToMemory(
-		&pem.Block{
-			Type:  "RSA PUBLIC KEY",
-			Bytes: pubkey_bytes,
-		},
-	)
-
-	return string(pubkey_pem), nil
-}
